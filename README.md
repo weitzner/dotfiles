@@ -14,7 +14,7 @@ This means that I have a `zshrc` file as well as a custom `zsh-theme` file that 
 Installation
 ------------
 ``` bash
-git clone git://github.com/weitzner/dotfiles ~/dotfiles
+git clone git@github.com:weitzner/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 sh symlink_dotfiles.sh
 ```
