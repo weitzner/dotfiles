@@ -7,7 +7,7 @@
 
 
 layout_conda() {
-  \. "$HOME/miniconda3/etc/profile.d/conda.sh" || return $?
+  \. "$HOME/miniforge3/etc/profile.d/conda.sh" || return $?
 
   if [ -n "${1}" ]; then
     NAME="${1}"
