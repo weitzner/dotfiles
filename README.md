@@ -8,7 +8,7 @@ chezmoi's naming convention (`dot_foo` -> `~/.foo`); templated files
 etc.) from each machine's local, untracked `~/.config/chezmoi/chezmoi.toml`
 -- see `MACHINES.md` for what each machine needs to set.
 
-I (@weitzner) prefer `zsh` as my shell, with `oh-my-zsh`. `dot_zshrc` and the
+`zsh` with `oh-my-zsh` is the preferred shell setup. `dot_zshrc` and the
 custom `dot_oh-my-zsh/custom/verbose.zsh-theme` theme file handle that setup.
 
 **⚠️ Before pulling this repo on another machine**: make sure you're ready to

@@ -46,7 +46,7 @@ miniforge install correctly, not a separate empty root).
    sourceDir = "/path/to/dotfiles"  # wherever you cloned it on this machine
 
    [data]
-       name = "Brian D. Weitzner"
+       name = "Your Name"
        email = "..."          # this machine's git identity
        signingkey = "..."     # this machine's signing key (or omit for none)
        # Optional, both default to "" via .chezmoidata.yaml if omitted:
@@ -64,7 +64,7 @@ miniforge install correctly, not a separate empty root).
 
 ## Known per-machine differences today
 
-- **This Mac (bweitzner@Outpace)**: `sshSignProgram` set to 1Password's
+- **This Mac**: `sshSignProgram` set to 1Password's
   `op-ssh-sign` binary; `blastdbPath` left unset (no space for BLAST
   databases on this machine).
   - `signingkey` here is the SSH **public** key (an `ssh-rsa AAAA...`
