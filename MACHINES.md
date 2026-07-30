@@ -20,27 +20,13 @@ CLI; micromamba is a small standalone binary that does the same activation
 near-instantly). This assumes conda/miniforge is already installed on the
 machine; it does not install conda itself. If `$HOME/miniforge3/bin/micromamba`
 doesn't exist yet, every new shell will fail at that line. Install it once,
-into the existing miniforge install, using the ONE block below that matches
-this machine (each is complete and self-contained -- don't mix lines from
-different blocks):
+into the existing miniforge install -- set `ARCH` to match this machine
+(`osx-arm64` for Apple Silicon, `osx-64` for Intel Mac, `linux-64` for
+Linux), then run:
 
-**Apple Silicon Mac:**
 ```bash
-curl -Ls "https://micro.mamba.pm/api/micromamba/osx-arm64/latest" | tar -xvj bin/micromamba
-mkdir -p "$HOME/miniforge3/bin"
-mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
-```
-
-**Intel Mac:**
-```bash
-curl -Ls "https://micro.mamba.pm/api/micromamba/osx-64/latest" | tar -xvj bin/micromamba
-mkdir -p "$HOME/miniforge3/bin"
-mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
-```
-
-**Linux:**
-```bash
-curl -Ls "https://micro.mamba.pm/api/micromamba/linux-64/latest" | tar -xvj bin/micromamba
+ARCH=osx-arm64  # change to osx-64 (Intel Mac) or linux-64 (Linux) as needed
+curl -Ls "https://micro.mamba.pm/api/micromamba/${ARCH}/latest" | tar -xvj bin/micromamba
 mkdir -p "$HOME/miniforge3/bin"
 mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
 ```
