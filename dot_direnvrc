@@ -7,7 +7,20 @@
 
 
 layout_conda() {
-  \. "$HOME/miniforge3/etc/profile.d/conda.sh" || return $?
+  # Different machines use different conda distributions (miniforge3 vs
+  # mambaforge vs miniconda3) under differently-named roots -- detect which
+  # one is actually present rather than hardcoding one name.
+  if [ -d "$HOME/miniforge3" ]; then
+    _CONDA_ROOT="$HOME/miniforge3"
+  elif [ -d "$HOME/mambaforge" ]; then
+    _CONDA_ROOT="$HOME/mambaforge"
+  elif [ -d "$HOME/miniconda3" ]; then
+    _CONDA_ROOT="$HOME/miniconda3"
+  else
+    echo "layout_conda: no miniforge3/mambaforge/miniconda3 found under \$HOME" >&2
+    return 1
+  fi
+  \. "${_CONDA_ROOT}/etc/profile.d/conda.sh" || return $?
 
   if [ -n "${1}" ]; then
     NAME="${1}"

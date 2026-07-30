@@ -86,11 +86,24 @@ if [[ -f $HOME/.rosetta3_rc ]]; then
 fi
 
 # >>> conda initialize (fast path via micromamba, base auto-activation only) >>>
-export MAMBA_ROOT_PREFIX=$HOME/miniforge3
-export MAMBA_EXE=$HOME/miniforge3/bin/micromamba
-eval "$($MAMBA_EXE shell hook --shell zsh)"
-micromamba activate base
-# <<< conda initialize <<<
+# Different machines use different conda distributions (miniforge3 vs
+# mambaforge vs miniconda3), each installed under a differently-named root --
+# detect which one is actually present rather than hardcoding one name.
+if [[ -d "$HOME/miniforge3" ]]; then
+    _CONDA_ROOT="$HOME/miniforge3"
+elif [[ -d "$HOME/mambaforge" ]]; then
+    _CONDA_ROOT="$HOME/mambaforge"
+elif [[ -d "$HOME/miniconda3" ]]; then
+    _CONDA_ROOT="$HOME/miniconda3"
+fi
+
+if [[ -n "$_CONDA_ROOT" ]]; then
+    export MAMBA_ROOT_PREFIX="$_CONDA_ROOT"
+    export MAMBA_EXE="$_CONDA_ROOT/bin/micromamba"
+    eval "$($MAMBA_EXE shell hook --shell zsh)"
+    micromamba activate base
+fi
+unset _CONDA_ROOT
 # <<< conda initialize <<<
 
 # set up zsh to include the current environment in the prompt
