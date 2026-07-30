@@ -6,8 +6,12 @@ Per-machine chezmoi setup
 
 ## micromamba (needed by dot_zshrc, assumes conda/miniforge already installed)
 
+Check arch on Linux first: `uname -m` -> `x86_64` = `linux-64`, `aarch64` =
+`linux-aarch64` (e.g. 64-bit Raspberry Pi OS). `armv7l` (32-bit) has no
+prebuilt micromamba binary.
+
 ```bash
-ARCH=osx-arm64  # or osx-64 (Intel Mac) / linux-64 (Linux)
+ARCH=osx-arm64  # or osx-64 (Intel Mac) / linux-64 / linux-aarch64 (Linux)
 curl -Ls "https://micro.mamba.pm/api/micromamba/${ARCH}/latest" | tar -xvj bin/micromamba
 mkdir -p "$HOME/miniforge3/bin"
 mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
