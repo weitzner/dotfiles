@@ -27,9 +27,11 @@
 {{- end }}
 [pull]
 	rebase = true
-{{- if .sshSignProgram }}
+{{- if .signingkey }}
 [gpg]
 	format = ssh
+{{- if .sshSignProgram }}
 [gpg "ssh"]
 	program = {{ .sshSignProgram }}
+{{- end }}
 {{- end }}
