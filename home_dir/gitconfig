@@ -15,9 +15,13 @@
 	ldiff = difftool -t latex
 [user]
 	name = Brian D. Weitzner
-	email = brian.weitzner@gmail.com
-	signingkey = 09E370D51B097A3B
+	email = bweitzner@outpacebio.com
+	signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+Et79wgJ8EHcGUA+wFnKsTj0Pv+TzWJXX7X8Oi6p7MlPDVQBpnA1AfNBwfisdMpo9LVVOQZjHy7ZkonOxBXHEH45/NGneSgnR55OtaqNTVnPMI2bdtow4wSaHULtLo3BrzI6HPzuwpGwWLcVEmKBOq0XAS2S7Tlrrp3IHXwAhoc5kXcxfD4oLWwhNDZY/vQ+Yw9Z3Jjg5Bo96dqvIhH+BV0BFzHjDFAWLF0aFrO++ZY7mlDgsd7cQcn8BpU4KzHWEdqNvSvACf3okzTMeyUFej+9T4jp7BO6gBUOTOnIaOpUME9vpPNjGs1SADHn37OSYWkMp7hP0W3CsYdra/jQpH8wR+vqNkRKqllZDuqOuRWf6Cdc6p3RC5kPFIWhU38n1rkPYmdsUvuvQldrSaRp7bG/YbloRPQN2AY1TiYgGcds3LlcUYZmsIHqWo29gjAQ/c+BiWGJ6GJyJBhcJKn3EhWaInZQ6ch6vVYFpqFJjXTaYsfoL0vwhUPODx8y7XymPyj+LWFz6Qi/Qp2NxV1WsleyHSM2Gkt2Ws4R/oQkk79oK7SFwKhVVayGMXrdOjaK88w0Gtf8MWxG/JzVZGQdIOkzyMExDLpgMZ+OkUONBaX9YLJ5wdF3C9QxUtsHurMqp5KaB3Hm3lvnt3ntcx4hLnGEX8H8B4hgTtyysSaNkXw==
 [commit]
-	gpgsign = false
+	gpgsign = true
 [pull]
 	rebase = true
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign

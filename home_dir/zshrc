@@ -22,6 +22,7 @@ if [[ -n ${TMUX} || ${OSTYPE} == linux-gnu* ]]; then
     function iterm2_prompt_mark() {}
 fi
 
+ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # Allow things like "sudo !!" to work without the shell wanting confirmation
@@ -62,6 +63,7 @@ else
         fi
     }
 
+    add_to_path $HOME/miniforge3/bin
     add_to_path /opt/local/libexec/gnubin/
     add_to_path /opt/local/bin
     add_to_path /Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
@@ -83,19 +85,12 @@ if [[ -f $HOME/.rosetta3_rc ]]; then
     source $HOME/.rosetta3_rc
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$($HOME'/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/miniforge3/etc/profile.d/conda.sh"
-    else
-        export PATH="$HOME/miniforge3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# >>> conda initialize (fast path via micromamba, base auto-activation only) >>>
+export MAMBA_ROOT_PREFIX=$HOME/miniforge3
+export MAMBA_EXE=$HOME/miniforge3/bin/micromamba
+eval "$($MAMBA_EXE shell hook --shell zsh)"
+micromamba activate base
+# <<< conda initialize <<<
 # <<< conda initialize <<<
 
 # set up zsh to include the current environment in the prompt
@@ -110,3 +105,5 @@ show_conda_env() {
   fi
 }
 PS1='$(show_conda_env)'$PS1
+
+export PATH="$HOME/.pixi/bin:$PATH"

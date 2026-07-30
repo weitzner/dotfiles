@@ -2,3 +2,5 @@
 pymol_scripts/pymol_license.lic
 pymol_scripts/__pycache__
 pymol_scripts/*.pyc
+home_dir/vim/.netrwhist
+home_dir/*.bak.*

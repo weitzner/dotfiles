@@ -48,7 +48,11 @@ from pymol import cmd
 import os, sys
 import pymol_rosetta_utils as pr
 
-run ~/Rosetta/tools/antibody/colorcdrs.py
+python
+import os
+if os.path.exists(os.path.expanduser("~/Rosetta/tools/antibody/colorcdrs.py")):
+    cmd.do("run ~/Rosetta/tools/antibody/colorcdrs.py")
+python end
 
 alias ribbonize,\
     hide; show cartoon; set cartoon_fancy_helices, 1; \
@@ -107,7 +111,7 @@ alias bam, pdbdircyclerlite; set_cycler_command 'stix; show cartoon';
 alias pick3, pdblistfilecyclerlite pick3.list; set_cycler_command 'stix; zoom chainA, buffer=4'
 
 alias bbo, hide all; show sticks, name Ca+C+O+N+CA
-alias hetsee, hide all; show cartoon; alignto asym*; zoom; select interfaceA, asym and chain A within 10 of (asym and chain B); select interfaceB, asym and chain B within 10 of (asym and chain A); select interfaceAA, not hydro within 3 of interfaceA; select interfaceBB, not hydro within 3 of interfaceB; show lines, interfaceAA; show lines, interfaceBB; select interfaceOri, resi and asym and interfaceAA or asym and interfaceBB; show sticks, interfaceOri; disable interface*; disable *_2_S* or *_3_S* or *_4_S* or or *_5_S*
+alias hetsee, hide all; show cartoon; alignto asym*; zoom; select interfaceA, asym and chain A within 10 of (asym and chain B); select interfaceB, asym and chain B within 10 of (asym and chain A); select interfaceAA, not hydro within 3 of interfaceA; select interfaceBB, not hydro within 3 of interfaceB; show lines, interfaceAA; show lines, interfaceBB; select interfaceOri, resi and asym and interfaceAA or asym and interfaceBB; show sticks, interfaceOri; disable interface*; disable *_2_S* or *_3_S* or *_4_S* or *_5_S*
 
 
 

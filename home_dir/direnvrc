@@ -19,7 +19,7 @@ layout_conda() {
   if [ -n "${NAME}" ]; then
     ACTIVATE_ARGS="${NAME}"
     CREATE_ARGS="-n ${NAME}"
-    if [[ "${NAME}" != `conda env list | grep "${NAME}" | awk '{print $1}'` ]]; then
+    if ! conda env list | awk '{print $1}' | grep -qFx "${NAME}"; then
       CREATE_NEW_ENV=true
     fi
   else
