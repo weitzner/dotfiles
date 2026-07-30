@@ -27,18 +27,21 @@ different blocks):
 **Apple Silicon Mac:**
 ```bash
 curl -Ls "https://micro.mamba.pm/api/micromamba/osx-arm64/latest" | tar -xvj bin/micromamba
+mkdir -p "$HOME/miniforge3/bin"
 mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
 ```
 
 **Intel Mac:**
 ```bash
 curl -Ls "https://micro.mamba.pm/api/micromamba/osx-64/latest" | tar -xvj bin/micromamba
+mkdir -p "$HOME/miniforge3/bin"
 mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
 ```
 
 **Linux:**
 ```bash
 curl -Ls "https://micro.mamba.pm/api/micromamba/linux-64/latest" | tar -xvj bin/micromamba
+mkdir -p "$HOME/miniforge3/bin"
 mv bin/micromamba "$HOME/miniforge3/bin/micromamba"
 ```
 
