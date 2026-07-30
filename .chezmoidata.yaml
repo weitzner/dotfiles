@@ -1,0 +1,6 @@
+# Defaults for optional per-machine values. Override in each machine's
+# local ~/.config/chezmoi/chezmoi.toml [data] section as needed.
+# name/email/signingkey have no default here deliberately -- they must
+# be set explicitly per machine so identity is never silently wrong.
+blastdbPath: ""
+sshSignProgram: ""

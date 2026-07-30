@@ -1,0 +1,12 @@
+README.md
+LICENSE
+legacy_symlink_setup.sh
+MACHINES.md
+.gitignore
+.chezmoiignore
+
+pymol_scripts/__pycache__
+pymol_scripts/*.pyc
+pymol_scripts/pymol_license.lic
+**/.DS_Store
+*.bak.*

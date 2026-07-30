@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# DEPRECATED: this repo now uses chezmoi (see README.md / MACHINES.md).
+# Kept functional only until every machine using this repo has completed
+# its own `chezmoi init`/`chezmoi apply` migration -- do not delete until
+# then. New machines should use chezmoi, not this script.
+# (Renamed from symlink_dotfiles.sh: its old name collided with chezmoi's
+# own "symlink_" source-file naming convention.)
+
 # This script creates symlinks from the home directory to the analogous
 # file in the repository
 
