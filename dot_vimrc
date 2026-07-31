@@ -1,25 +1,25 @@
 filetype plugin indent on
 
-set nu  " Line numbers on
-"set nowrap  " Line wrapping off
-" Formatting (some of these are for coding in C and C++)
-set ts=2  " Tabs are 2 spaces
-"set bs=2  " Backspace over everything in insert mode
-"set shiftwidth=2  " Tabs under smart indent
-"set autoindent
-"set smarttab
-  
+set nu
+set ts=2
+
 " Visual
-set showmatch  " Show matching brackets.
-"set mat=5  " Bracket blinking.
- 
+set showmatch
+
 syntax enable
 set background=dark
-colorscheme solarized
+silent! colorscheme solarized   " guarded: don't error if solarized isn't installed
 
-" set mouse=a
-" map <ScrollWheelUp> <C-Y>
-" map <ScrollWheelDown> <C-E>
+" Modern niceties
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+if !isdirectory($HOME . "/.vim/undo")
+    call mkdir($HOME . "/.vim/undo", "p")
+endif
+set undofile
+set undodir=$HOME/.vim/undo
 
 " tell vim to use the system clipboard
 set clipboard=unnamed

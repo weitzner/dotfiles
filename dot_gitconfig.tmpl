@@ -1,10 +1,12 @@
 [credential]
+{{- if eq .chezmoi.os "darwin" }}
+	helper = osxkeychain
+{{- else }}
 	helper = cache --timeout=3600
+{{- end }}
 [core]
 	autocrlf = input
 	excludesfile = ~/.gitignore_global
-[push]
-	default = simple
 [filter "lfs"]
 	clean = git-lfs clean %f
 	smudge = git-lfs smudge %f
