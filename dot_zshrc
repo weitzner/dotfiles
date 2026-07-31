@@ -1,18 +1,8 @@
-# Path to your oh-my-zsh configuration.
-ZSH=$HOME/.oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-ZSH_THEME="verbose"
-
 # Customize to your needs...
 PATH_PREFIX=$HOME/bin
 
-# Oh my, zsh plugins
-plugins=(colored-man-pages direnv docker docker-compose git github tmux)
 # Mac-specific configuration
 if [[ ${OSTYPE} == darwin* ]]; then
-    plugins+=(iterm2 macports macos)
     # test iTerm2 shell integration -- yes, you should be using iTerm2
     test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 fi
@@ -22,8 +12,14 @@ if [[ -n ${TMUX} || ${OSTYPE} == linux-gnu* ]]; then
     function iterm2_prompt_mark() {}
 fi
 
-ZSH_DISABLE_COMPFIX=true
-source $ZSH/oh-my-zsh.sh
+# >>> zsh plugin management (Antidote, replacing oh-my-zsh) >>>
+# use-omz (loaded first, per its own docs) bridges oh-my-zsh's plugin/lib
+# ecosystem into Antidote and handles completion init (compinit) itself --
+# do not add a separate compinit call here, it causes completion errors.
+source "$HOME/.antidote/antidote.zsh"
+antidote load "$HOME/.zsh_plugins.txt"
+source "$HOME/.zsh_theme"
+# <<< zsh plugin management <<<
 
 # Allow things like "sudo !!" to work without the shell wanting confirmation
 setopt no_hist_verify
