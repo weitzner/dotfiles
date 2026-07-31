@@ -38,6 +38,3 @@ mv bin/micromamba "${CONDA_ROOT}/bin/micromamba"
    ```
 3. `chezmoi diff && chezmoi apply`.
 4. Verify: `git config --get user.signingkey` matches what you set above.
-
-Once every machine has migrated: delete `legacy_symlink_setup.sh` and the
-warning in `README.md`.
