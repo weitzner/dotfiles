@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pymol_scripts"
+version = "0.1.0"
+description = "Personal PyMOL utility scripts"
+requires-python = ">=3.8"
+
+[tool.setuptools]
+packages = ["pymol_scripts"]
+package-dir = {"pymol_scripts" = "."}

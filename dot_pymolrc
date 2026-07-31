@@ -62,9 +62,16 @@ alias ribbonize,\
 
 
 ##### Big chunk from the bakerlab historic pymolrc ####
-# add user's home directory to path -- this is where dotfiles will place symlinks
-sys.path.append(os.path.expanduser("~"))
-from pymol_scripts import *
+python
+# Prefer the properly installed pymol_scripts package (pip install -e); fall
+# back to the old sys.path hack for machines that haven't run that install
+# step yet, so this works either way without per-machine templating.
+try:
+    from pymol_scripts import *
+except ImportError:
+    sys.path.append(os.path.expanduser("~"))
+    from pymol_scripts import *
+python end
 
 run ~/pymol_scripts/tmalign.py
 
