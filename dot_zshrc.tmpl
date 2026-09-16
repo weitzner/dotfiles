@@ -53,6 +53,9 @@ else
     # color formatting for the BSD implementation of `ls`
     export LSCOLORS='ExGxcxdxcxegedabagacad'
 
+    # Force 1Password CLI to use desktop app biometric unlock
+    export OP_BIOMETRIC_UNLOCK_ENABLED=true
+
     function add_to_path() {
         if [[ -d $1 ]]; then
             PATH_PREFIX=$PATH_PREFIX:$1
