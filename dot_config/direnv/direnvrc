@@ -1,51 +1,93 @@
-# Layout configuration for conda environments:
-#   Specify environment name with `layout conda <envname>`
-#       or
-#   Detect name from environment.yml with `layout conda`
-#       or
-#   Setup environment in `.conda`
-
+# Layout configuration for Conda environments:
+#
+# Specify an environment name:
+#   layout conda <envname>
+#
+# Detect the name from environment.yaml or environment.yml:
+#   layout conda
+#
+# If the manifest has no name, use a local .conda environment.
 
 layout_conda() {
-  # Different machines use different conda distributions (miniforge3 vs
-  # mambaforge vs miniconda3) under differently-named roots -- detect which
-  # one is actually present rather than hardcoding one name.
-  if [ -d "$HOME/miniforge3" ]; then
-    _CONDA_ROOT="$HOME/miniforge3"
-  elif [ -d "$HOME/mambaforge" ]; then
-    _CONDA_ROOT="$HOME/mambaforge"
-  elif [ -d "$HOME/miniconda3" ]; then
-    _CONDA_ROOT="$HOME/miniconda3"
-  else
-    echo "layout_conda: no miniforge3/mambaforge/miniconda3 found under \$HOME" >&2
-    return 1
-  fi
-  \. "${_CONDA_ROOT}/etc/profile.d/conda.sh" || return $?
+    local _CONDA_ROOT
+    local ENVIRONMENT_FILE
+    local NAME
+    local ACTIVATE_ARGS
+    local CREATE_NEW_ENV=false
 
-  if [ -n "${1}" ]; then
-    NAME="${1}"
-  else
-    NAME=$(grep name: environment.yml 2> /dev/null | sed -e 's/name: //')
-  fi
-
-  CREATE_NEW_ENV=false
-  if [ -n "${NAME}" ]; then
-    ACTIVATE_ARGS="${NAME}"
-    CREATE_ARGS="-n ${NAME}"
-    if ! conda env list | awk '{print $1}' | grep -qFx "${NAME}"; then
-      CREATE_NEW_ENV=true
+    # Different machines use different Conda distributions under
+    # differently named roots. Detect the installed distribution.
+    if [ -d "$HOME/miniforge3" ]; then
+        _CONDA_ROOT="$HOME/miniforge3"
+    elif [ -d "$HOME/mambaforge" ]; then
+        _CONDA_ROOT="$HOME/mambaforge"
+    elif [ -d "$HOME/miniconda3" ]; then
+        _CONDA_ROOT="$HOME/miniconda3"
+    else
+        echo \
+            "layout_conda: no miniforge3, mambaforge, or miniconda3 found under $HOME" \
+            >&2
+        return 1
     fi
-  else
-    ACTIVATE_ARGS="./.conda"
-    CREATE_ARGS="-p .conda"
-    if [ ! -d "${ACTIVATE_ARGS}" ]; then
-      CREATE_NEW_ENV=true
-    fi
-  fi;
 
-  # Hard to resolve if an environment is valid, so just try to create instead.
-  if [ "${CREATE_NEW_ENV}" = true ]; then
-    conda create ${CREATE_ARGS}
-  fi
-  conda activate ${ACTIVATE_ARGS}
+    . "${_CONDA_ROOT}/etc/profile.d/conda.sh" || return $?
+
+    if [ -n "${1:-}" ]; then
+        NAME="$1"
+    else
+        if [ -f environment.yaml ] && [ -f environment.yml ]; then
+            echo \
+                "layout_conda: both environment.yaml and environment.yml exist" \
+                >&2
+            return 1
+        elif [ -f environment.yaml ]; then
+            ENVIRONMENT_FILE=environment.yaml
+        elif [ -f environment.yml ]; then
+            ENVIRONMENT_FILE=environment.yml
+        else
+            ENVIRONMENT_FILE=
+        fi
+
+        if [ -n "$ENVIRONMENT_FILE" ]; then
+            NAME=$(
+                sed -nE \
+                    's/^[[:space:]]*name:[[:space:]]*"?([^"]+)"?[[:space:]]*$/\1/p' \
+                    "$ENVIRONMENT_FILE" |
+                    head -n 1
+            )
+        else
+            NAME=
+        fi
+    fi
+
+    if [ -n "$NAME" ]; then
+        ACTIVATE_ARGS="$NAME"
+
+        if ! conda env list |
+            awk 'NF && $1 !~ /^#/ {print $1}' |
+            grep -qFx "$NAME"
+        then
+            CREATE_NEW_ENV=true
+        fi
+    else
+        ACTIVATE_ARGS="./.conda"
+
+        if [ ! -d "$ACTIVATE_ARGS" ]; then
+            CREATE_NEW_ENV=true
+        fi
+    fi
+
+    if [ "$CREATE_NEW_ENV" = true ]; then
+        if [ -n "$NAME" ]; then
+            if [ -n "${ENVIRONMENT_FILE:-}" ]; then
+                conda env create --file "$ENVIRONMENT_FILE" || return $?
+            else
+                conda create --yes --name "$NAME" || return $?
+            fi
+        else
+            conda create --yes --prefix .conda || return $?
+        fi
+    fi
+
+    conda activate "$ACTIVATE_ARGS"
 }
